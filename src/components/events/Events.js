@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import EventCard from '../shared/EventCard';
 
 export default function Events() {
+  const [events, setEvents] = useState([]);
+  const url = 'http://localhost:3001/api/event/filter';
+  
+  useEffect(() => {
+    fetch(url)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setEvents(data.events || []);
+      });
+  }, []);
+  
+ 
+
   return (
-    <div>
-      Events works!
+    <div className="container">
+      <div className="row">
+        {events.map((event) => <EventCard event={event} />)}
+      </div>
     </div>
   );
 }

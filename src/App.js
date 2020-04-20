@@ -7,6 +7,7 @@ import Rooms from './components/rooms/Rooms';
 import Events from './components/events/Events';
 import Login from './components/users/Login';
 import Signup from './components/users/Signup';
+import Event from './components/events/Event';
 
 import './App.css';
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/events" component={Events} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path='/event/:id' component={Event} />
           <Redirect from='/' to='/home'/>
         </Switch>
       </BrowserRouter>
