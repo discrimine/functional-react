@@ -1,0 +1,27 @@
+.post-container {
+	h5 {
+		height: 150px;
+		background-size: cover;
+		background-position: center;
+		padding: 10px;
+		color: white;
+		font-size: 30px;
+		font-weight: 900;
+	}
+}
+
+.event-container {
+	text-decoration: none;
+	color: #000000;
+	
+	&:hover {
+		text-decoration: none;
+		opacity: 0.8;
+	}
+
+	p {
+		max-height: 50px;
+		overflow: hidden;
+
+	}
+}
