@@ -13,7 +13,10 @@ export default function Events() {
       })
       .then((data) => {
         setEvents(data.events || []);
-      });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }, []);
   
  
