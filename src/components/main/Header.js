@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="nav-link" to="/">
-        <img src="/logo192.png" width="50" height="50" className="d-inline-block align-top" alt=""></img>
+        <img src="/logo192.png" width="50" height="50" className="d-inline-block align-top" alt="home"></img>
       </Link>
       <div className="collapse navbar-collapse justify-content-between">
         <ul className="navbar-nav">
