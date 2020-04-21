@@ -18,8 +18,6 @@ export default function Events() {
         console.error(err);
       })
   }, []);
-  
- 
 
   return (
     <div className="container">
