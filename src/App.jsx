@@ -10,27 +10,27 @@ import Signup from './components/users/Signup';
 import Event from './components/events/Event';
 import Room from './components/room/Room';
 
-import './App.css';
+import './App.scss';
 
 function App() {
-    return (
-        <div className="App">
-            <BrowserRouter>
-                <Header />
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Header />
 
-                <Switch>
-                    <Route path="/home" component={Main} />
-                    <Route path="/rooms" component={Rooms} />
-                    <Route path="/events" component={Events} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/signup" component={Signup} />
-                    <Route path="/event/:id" component={Event} />
-                    <Route path="/room/:id" component={Room} />
-                    <Redirect from="/" to="/home" />
-                </Switch>
-            </BrowserRouter>
-        </div>
-    );
+        <Switch>
+          <Route path="/home" component={Main} />
+          <Route path="/rooms" component={Rooms} />
+          <Route path="/events" component={Events} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/event/:id" component={Event} />
+          <Route path="/room/:id" component={Room} />
+          <Redirect from="/" to="/home" />
+        </Switch>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;

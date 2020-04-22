@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function Main() {
-    return <div>Main page works!</div>;
+  return <div>Main page works!</div>;
 }
