@@ -17,7 +17,6 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header />
-
         <Switch>
           <Route path="/home" component={Main} />
           <Route path="/rooms" component={Rooms} />
