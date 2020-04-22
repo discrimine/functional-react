@@ -6,7 +6,7 @@ export default function EventCard(props) {
   const eventDate = new Date(event.start_date).toLocaleDateString();
 
   return (
-    <div className="card-container col-4" style={{marginTop: "15px"}}>
+    <div className="card-container col-4 mt-3">
       <div className="card">
         <img src={event.cover} className="card-img-top" alt={event.title}/>
         <div className="card-body">
