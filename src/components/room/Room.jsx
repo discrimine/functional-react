@@ -38,7 +38,7 @@ export default function Room(props) {
     ) : (
         <div className="container">
             {error ? (
-                <h2 className="text-center">EVENT NOT FOUND!</h2>
+                <h2 className="text-center">ROOM NOT FOUND!</h2>
             ) : (
                 <div className="row">
                     <div className="col-12">
