@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import EventCard from '../shared/EventCard';
-import { getEventUrl } from '../../constants/Api';
+import { GET_EVENTS_URL } from '../../constants/urls';
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -16,7 +16,7 @@ export default function Events() {
   }
 
   function fetchEvents() {
-    fetch(getEventUrl + '?' + filterOptions)
+    fetch(GET_EVENTS_URL + '?' + filterOptions)
       .then((response) => response.json())
       .then((data) => {
         setEvents(data.events || []);
@@ -26,24 +26,58 @@ export default function Events() {
       })
   };
 
+  function clearFilter() {
+    for (let key of filterOptions.keys()) {
+      filterOptions.delete(key)
+    }
+    setFilterOptions(filterOptions);
+    fetchEvents();
+  }
+
   return (
     <div className="container">
-      <div className="row align-items-center mt-3">
-        <div className="form-group col-3">
-          <label>Count of members</label>
-          <input type="text" className="form-control" name="members" onChange={handleChange}/>
+      <div className="row align-items-end mt-3">
+        <div className="form-group col-2">
+          <label>Members</label>
+          <input
+            type="text"
+            className="form-control"
+            name="members"
+            value={filterOptions.get('members') || ''}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group col-3">
           <label>Date</label>
-          <input type="date" className="form-control" name="date" onChange={handleChange}/>
+          <input
+            type="date"
+            className="form-control"
+            name="date"
+            value={filterOptions.get('date') || ''}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group col-3">
           <label>Category</label>
-          <input type="text" className="form-control" name="category" onChange={handleChange}/>
+          <input type="text"
+            className="form-control"
+            name="category"
+            value={filterOptions.get('category') || ''}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group col-3">
           <label>Location</label>
-          <input type="text" className="form-control" name="location" onChange={handleChange}/>
+          <input
+            type="text"
+            className="form-control"
+            name="location"
+            value={filterOptions.get('location') || ''}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group col-1">
+          <button type="submit" onClick={clearFilter} className="btn btn-primary">Clear</button>
         </div>
       </div>
       <div className="row">
