@@ -8,7 +8,7 @@ import Events from './components/events/Events';
 import Login from './components/users/Login';
 import Signup from './components/users/Signup';
 import Event from './components/events/Event';
-import Room from './components/room/Room';
+import Room from './components/rooms/Room';
 
 import './App.scss';
 
