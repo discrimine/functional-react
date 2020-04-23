@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from '../shared/EventCard';
+import Spinner from '../shared/Spinner';
 import { GET_EVENTS_URL } from '../../constants/urls';
 
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [filterOptions, setFilterOptions] = useState(new URLSearchParams());
+  const [loader, setLoader] = useState(true);
 
   useEffect(fetchEvents, [])
 
@@ -19,10 +21,12 @@ export default function Events() {
       .then((response) => response.json())
       .then((data) => {
         setEvents(data.events || []);
+        setLoader(false);
       })
       .catch(err => {
         // eslint-disable-next-line no-console
         console.error(err);
+        setLoader(false);
       })
   };
 
@@ -34,8 +38,9 @@ export default function Events() {
     fetchEvents();
   }
 
-  return (
-    <div className="container">
+  return loader
+  ? ( <Spinner /> )
+  : (<div className="container">
       <div className="row align-items-end mt-3">
         <div className="form-group col-2">
           <label>Members</label>
