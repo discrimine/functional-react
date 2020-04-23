@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import EventCard from '../shared/EventCard';
 import { GET_EVENTS_URL } from '../../constants/urls';
 
@@ -21,7 +20,8 @@ export default function Events() {
       .then((data) => {
         setEvents(data.events || []);
       })
-      .catch((err) => {
+      .catch(err => {
+        // eslint-disable-next-line no-console
         console.error(err);
       })
   };
