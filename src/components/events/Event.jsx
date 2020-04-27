@@ -3,6 +3,7 @@ import { GET_EVENT_URL } from '../../constants/urls';
 import StarRatings from 'react-star-ratings';
 import Spinner from '../shared/Spinner';
 import { useHistory } from "react-router-dom";
+import './event.scss';
 
 export default function Event(props) {
   const [event, setEvent] = useState({});
@@ -56,7 +57,7 @@ export default function Event(props) {
         {event.media.length
           ? <div className="row">
               {event.media.map((media, key) => {
-                return <div className="col-3 mt-3" key={key}> <img src={media.key} alt=""/> </div>
+                return <div className="col-3 mt-3 gallery-img" key={key}> <img src={media.key} alt="gallery"/> </div>
               })}
             </div>
           : ''
