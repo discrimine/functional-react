@@ -3,5 +3,6 @@ const BASE_URL = 'http://localhost:3001/api';
 const ROOMS_URL = `${BASE_URL}/room`;
 
 const GET_EVENTS_URL = `${BASE_URL}/event/filter`;
+const GET_EVENT_URL = `${BASE_URL}/event/`;
 
-export { BASE_URL, ROOMS_URL, GET_EVENTS_URL };
+export { BASE_URL, ROOMS_URL, GET_EVENTS_URL, GET_EVENT_URL };
