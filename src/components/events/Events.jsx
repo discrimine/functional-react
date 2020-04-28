@@ -6,7 +6,7 @@ import { GET_EVENTS_URL } from '../../constants/urls';
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [filterOptions, setFilterOptions] = useState(new URLSearchParams());
-  const [loader, setLoader] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(fetchEvents, [])
 
@@ -21,12 +21,12 @@ export default function Events() {
       .then((response) => response.json())
       .then((data) => {
         setEvents(data.events || []);
-        setLoader(false);
+        setIsLoaded(true);
       })
       .catch(err => {
         // eslint-disable-next-line no-console
         console.error(err);
-        setLoader(false);
+        setIsLoaded(true);
       })
   };
 
@@ -38,7 +38,7 @@ export default function Events() {
     fetchEvents();
   }
 
-  return loader
+  return !isLoaded
   ? ( <Spinner /> )
   : (<div className="container">
       <div className="row align-items-end mt-3">
