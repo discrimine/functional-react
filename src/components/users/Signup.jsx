@@ -13,30 +13,28 @@ export default function Signup(props) {
   };
 
   const handleSubmit = (event) => {
-    if (event) {
-      event.preventDefault();
-      options.body = JSON.stringify(inputs);
-      fetch(SIGNUP_URL, options)
-        .then(response => {
-          const data = response.json();
-          data.then(res => {
-            if(res.token){
-              localStorage.setItem('currentUser', JSON.stringify(res));
-              props.setIsLoggedIn(true);
-              history.push('/profile')
-            } else {
-              setErrorMessage(res.error.errors.message[0]);
-            }
-          });
-        })
-        .catch(error => {
-          console.error(error);
-        })
-    }
+    event.preventDefault();
+    options.body = JSON.stringify(inputs);
+    fetch(SIGNUP_URL, options)
+      .then(response => {
+        const data = response.json();
+        data.then(res => {
+          if(res.token) {
+            localStorage.setItem('currentUser', JSON.stringify(res));
+            props.setIsLoggedIn(true);
+            history.push('/profile')
+          } else {
+            setErrorMessage(res.error.errors.message[0]);
+          }
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      })
   };
 
   function ErrorBlock(props) {
-    return <div className="alert alert-danger mt-3" role="alert">
+    return <div className="alert alert-danger mt-3">
       {props.error}
     </div>
   }
@@ -46,7 +44,9 @@ export default function Signup(props) {
       <div className="row justify-content-center">
         <div className="col-6 align-self-center">
           <h1 className="text-center">Sign Up</h1>
-          <form className="register-form" onSubmit={handleSubmit}>
+          <form
+            className="register-form"
+            onSubmit={handleSubmit}>
             <div className="form-group row">
               <label
                 htmlFor="inputEmail1"
@@ -57,7 +57,6 @@ export default function Signup(props) {
                 <input
                   type="email"
                   className="form-control"
-                  id="inputEmail1"
                   name="email"
                   placeholder="Enter email"
                   onChange={handleInputChange}
@@ -67,12 +66,15 @@ export default function Signup(props) {
               </div>
             </div>
             <div className="form-group row">
-              <label htmlFor="inputPassword" className="col-4 col-form-label">Password</label>
+              <label
+                htmlFor="inputPassword"
+                className="col-4 col-form-label">
+                Password
+              </label>
               <div className="col-8">
                 <input
                   type="password"
                   className="form-control"
-                  id="inputPassword"
                   placeholder="Password"
                   name="password"
                   onChange={handleInputChange}
@@ -81,13 +83,15 @@ export default function Signup(props) {
               </div>
             </div>
             <div className="form-group row">
-              <label htmlFor="inputConfirmPassword" className="col-4 col-form-label">Confirm
-                password</label>
+              <label
+                htmlFor="inputConfirmPassword"
+                className="col-4 col-form-label">
+                Confirm password
+              </label>
               <div className="col-8">
                 <input
                   type="password"
                   className="form-control"
-                  id="inputConfirmPassword"
                   placeholder="Confirm password"
                   name="confpass"
                   onChange={handleInputChange}
@@ -97,8 +101,11 @@ export default function Signup(props) {
             </div>
             <div className="form-group row">
               <div className="col text-center">
-                <button type="submit" disabled={inputs.password !== inputs.confpass}
-                        className="btn btn-primary">Sign Up
+                <button
+                  type="submit"
+                  disabled={inputs.password !== inputs.confpass}
+                  className="btn btn-primary">
+                  Sign Up
                 </button>
               </div>
             </div>
