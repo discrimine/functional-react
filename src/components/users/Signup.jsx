@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SIGNUP_URL } from '../../constants/urls';
 import useCustomForm from '../hooks/FormHooks';
 import { useHistory } from 'react-router-dom';
-import ErrorBlockUser from "./ErrorBlockUser";
+import ErrorBlockUser from './ErrorBlockUser';
 
 export default function Signup(props) {
   const history = useHistory();
@@ -25,7 +25,7 @@ export default function Signup(props) {
             props.setIsLoggedIn(true);
             history.push('/profile')
           } else {
-            setErrorMessage( res.error.errors.password ? res.error.errors.password[0] : res.error.errors.message[0]);
+            setErrorMessage(res.error.errors.password ? res.error.errors.password[0] : res.error.errors.message[0]);
           }
         });
       })

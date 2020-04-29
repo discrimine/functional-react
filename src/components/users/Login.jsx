@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import { LOGIN_URL } from "../../constants/urls";
-import {useHistory} from "react-router";
-import useCustomForm from "../hooks/FormHooks";
-import ErrorBlockUser from "./ErrorBlockUser";
+import React, { useState } from 'react';
+import { LOGIN_URL } from '../../constants/urls';
+import { useHistory } from 'react-router';
+import useCustomForm from '../hooks/FormHooks';
+import ErrorBlockUser from './ErrorBlockUser';
 
 export default function Login(props) {
 
@@ -21,18 +21,18 @@ export default function Login(props) {
       .then(response => {
         const data = response.json();
         data.then(res => {
-          if(res.token) {
+          if (res.token) {
             localStorage.setItem('currentUser', JSON.stringify(res));
             props.setIsLoggedIn(true);
-            history.push('/')
+            history.push('/');
           } else {
-            setErrorMessage( res.error.errors.password ? res.error.errors.password[0] : res.error.errors.message[0]);
+            setErrorMessage(res.error.errors.password ? res.error.errors.password[0] : res.error.errors.message[0]);
           }
         });
       })
       .catch(error => {
         console.error(error);
-      })
+      });
   };
 
   return (
