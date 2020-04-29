@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SIGNUP_URL } from '../../constants/urls';
 import useCustomForm from '../hooks/FormHooks';
 import { useHistory } from 'react-router-dom';
+import ErrorBlockUser from "./ErrorBlockUser";
 
 export default function Signup(props) {
   const history = useHistory();
@@ -24,7 +25,7 @@ export default function Signup(props) {
             props.setIsLoggedIn(true);
             history.push('/profile')
           } else {
-            setErrorMessage(res.error.errors.message[0]);
+            setErrorMessage( res.error.errors.password ? res.error.errors.password[0] : res.error.errors.message[0]);
           }
         });
       })
@@ -32,12 +33,6 @@ export default function Signup(props) {
         console.error(error);
       })
   };
-
-  function ErrorBlock(props) {
-    return <div className="alert alert-danger mt-3">
-      {props.error}
-    </div>
-  }
 
   return (
     <div className="container mt-3">
@@ -62,7 +57,6 @@ export default function Signup(props) {
                   onChange={handleInputChange}
                   value={inputs.email || ''}
                   required/>
-                { errorMessage ? <ErrorBlock error={errorMessage}/> : null }
               </div>
             </div>
             <div className="form-group row">
@@ -97,6 +91,11 @@ export default function Signup(props) {
                   onChange={handleInputChange}
                   value={inputs.confpass || ''}
                   required/>
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-8 offset-4">
+                { errorMessage ? <ErrorBlockUser error={errorMessage}/> : null }
               </div>
             </div>
             <div className="form-group row">
