@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import RoomCard from '../shared/RoomCard';
 import Spinner from '../shared/Spinner';
 import { ROOMS_URL } from '../../constants/urls';
-import './rooms.scss';
 
 export default function Rooms() {
   const [rooms, setRooms] = useState([]);
@@ -24,9 +23,9 @@ export default function Rooms() {
       });
   }, []);
 
-  return loader ? (
-    <Spinner />
-  ) : (
+  return loader
+  ? ( <Spinner /> )
+  : (
     <div className="container">
       <div className="row">
         <p>Total: {totalRooms}</p>

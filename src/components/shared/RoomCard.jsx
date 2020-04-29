@@ -6,15 +6,19 @@ export default function RoomCard(props) {
   const { room } = props;
   const { title, description, cover, category, creator, id } = room;
   return (
-    <div className="room-container col-5">
-      <h3 className="text-center">{title}</h3>
-      <img src={cover} alt="cover" />
-      <p className="mt-3">{description}</p>
-      Category: <span className="badge badge-info">{category.title}</span>
-      <p>Creator: {creator.nick}</p>
-      <Link to={`/room/${id}`} className="d-block p-2 bg-primary text-white text-center">
-        Read more
-      </Link>
+    <div className="room-container col-4 mt-3">
+      <div className="card">
+        <h5 className="text-center card-title mt-2">{title}</h5>
+        <img src={cover} alt="cover" />
+        <div className="card-body">
+          <p className="mt-3">{`${description.slice(0, 120)}...`}</p>
+          Category: <span className="badge badge-info">{category.title}</span>
+          <p>Creator: {creator.nick}</p>
+          <Link to={`/room/${id}`} className="btn btn-primary d-block p-2">
+            Read more
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
