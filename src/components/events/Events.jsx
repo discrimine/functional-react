@@ -40,7 +40,8 @@ export default function Events() {
 
   return !isLoaded
   ? ( <Spinner /> )
-  : (<div className="container">
+  : (
+    <div className="container">
       <div className="row align-items-end mt-3">
         <div className="form-group col-2">
           <label>Members</label>
