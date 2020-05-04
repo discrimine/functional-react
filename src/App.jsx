@@ -23,7 +23,7 @@ function App() {
           <Route path="/home" component={Main} />
           <Route path="/rooms" component={Rooms} />
           <Route path="/events" component={Events} />
-          <Route path="/login" component={Login} />
+          <Route path="/login" component={() => <Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/signup" component={() => <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/event/:id" component={Event} />
           <Route path="/room/:id" component={Room} />
