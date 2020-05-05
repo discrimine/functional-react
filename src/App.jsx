@@ -27,7 +27,7 @@ function App() {
           <Route path="/signup" component={() => <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/event/:id" component={Event} />
           <Route path="/room/:id" component={Room} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/profile" component={() => <Profile isLoggedIn={isLoggedIn} />} />
           <Redirect from="/" to="/home" />
         </Switch>
       </BrowserRouter>
