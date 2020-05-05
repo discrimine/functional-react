@@ -6,7 +6,7 @@ import Spinner from '../shared/Spinner';
 import EventCard from '../shared/EventCard';
 import RoomCard from '../shared/RoomCard';
 
-export default function Profile(props) {
+export default function Profile() {
   const [user, setUserData] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -25,7 +25,7 @@ export default function Profile(props) {
       .then((response) => response.json())
       .then((data) => {
         let result = getUserEntities(userEvents, data.events);
-        setEvents(result|| []);
+        setEvents(result || []);
         setIsLoaded(true);
       })
       .catch(err => {
@@ -49,22 +49,22 @@ export default function Profile(props) {
       });
   }
 
-   function fetchUserData() {
-      fetch(PROFILE_URL, defaultOptionsAuth())
-        .then((response) => response.json())
-        .then((data) => {
-          if(!data.error){
-            fetchEvents(data.events);
-            fetchRooms(data.rooms);
-            setUserData(data || {});
-          }
-          setIsLoaded(true);
-        })
-        .catch(err => {
-          // eslint-disable-next-line no-console
-          console.error(err);
-          setIsLoaded(true);
-        });
+  function fetchUserData() {
+    fetch(PROFILE_URL, defaultOptionsAuth())
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.error) {
+          fetchEvents(data.events);
+          fetchRooms(data.rooms);
+          setUserData(data || {});
+        }
+        setIsLoaded(true);
+      })
+      .catch(err => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+        setIsLoaded(true);
+      });
   }
 
   function gender(val) {
@@ -83,68 +83,64 @@ export default function Profile(props) {
   }
 
   function Profile() {
-    if(props.isLoggedIn) {
-      return <div className="row justify-content-center">
-        <div className="col-6 align-self-center">
-          <h1 className="text-center">Profile</h1>
-          <div className="row">
-            <div className="col-12 text-center">
-              {user.avatar ? <img src={user.avatar} alt="avatar"/> : ''}
-            </div>
+    return <div className="row justify-content-center">
+      <div className="col-6 align-self-center">
+        <h1 className="text-center">Profile</h1>
+        <div className="row">
+          <div className="col-12 text-center">
+            {user.avatar ? <img src={user.avatar} alt="avatar" /> : ''}
           </div>
-          <div className="row">
-            <div className="col-6 text-right">
-              Nick
-            </div>
-            <div className="col-6 text-left">
-              {user.nick || '-'}
-            </div>
+        </div>
+        <div className="row">
+          <div className="col-6 text-right">
+            Nick
           </div>
-          <div className="row">
-            <div className="col-6 text-right">
-              First name
-            </div>
-            <div className="col-6 text-left">
-              {user.first_name || '-'}
-            </div>
+          <div className="col-6 text-left">
+            {user.nick || '-'}
           </div>
-          <div className="row">
-            <div className="col-6 text-right">
-              Last name
-            </div>
-            <div className="col-6 text-left">
-              {user.last_name || '-'}
-            </div>
+        </div>
+        <div className="row">
+          <div className="col-6 text-right">
+            First name
           </div>
-          <div className="row">
-            <div className="col-6 text-right">
-              Email
-            </div>
-            <div className="col-6 text-left">
-              {user.email || '-'}
-            </div>
+          <div className="col-6 text-left">
+            {user.first_name || '-'}
           </div>
-          <div className="row">
-            <div className="col-6 text-right">
-              Date of birth
-            </div>
-            <div className="col-6 text-left">
-              {user.birth_date || '-'}
-            </div>
+        </div>
+        <div className="row">
+          <div className="col-6 text-right">
+            Last name
           </div>
-          <div className="row">
-            <div className="col-6 text-right">
-              Gender
-            </div>
-            <div className="col-6 text-left">
-              {gender(user.gender) || '-'}
-            </div>
+          <div className="col-6 text-left">
+            {user.last_name || '-'}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6 text-right">
+            Email
+          </div>
+          <div className="col-6 text-left">
+            {user.email || '-'}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6 text-right">
+            Date of birth
+          </div>
+          <div className="col-6 text-left">
+            {user.birth_date || '-'}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6 text-right">
+            Gender
+          </div>
+          <div className="col-6 text-left">
+            {gender(user.gender) || '-'}
           </div>
         </div>
       </div>
-    } else {
-      return <h1 className="text-center">401 Unauthorized</h1>;
-    }
+    </div>
   }
 
   function Rooms(props) {
@@ -162,10 +158,10 @@ export default function Profile(props) {
   }
 
   return !isLoaded
-  ? ( <Spinner /> )
-  : ( <div className="container mt-3">
-      <Profile />
-      {events.length > 0 ? <Events events={events}/> : ''}
-      {rooms.length > 0 ? <Rooms rooms={rooms}/> : ''}
-    </div> );
+    ? (<Spinner/>)
+    : (<div className="container mt-3">
+      <Profile/>
+      {events.length > 0 ? <Events events={events} /> : ''}
+      {rooms.length > 0 ? <Rooms rooms={rooms} /> : ''}
+    </div>);
 }
