@@ -7,7 +7,7 @@ import EventCard from '../shared/EventCard';
 import RoomCard from '../shared/RoomCard';
 
 export default function Profile() {
-  const [user, setUserData] = useState({});
+  const [user, setUser] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
 
   const [rooms, setRooms] = useState([]);
@@ -15,9 +15,9 @@ export default function Profile() {
 
   useEffect(fetchUserData, []);
 
-  function getUserEntities(userEntity, allEntity) {
-    let arrIds = userEntity.map((ue) => ue.id);
-    return allEntity.filter((e) => arrIds.includes(e.id));
+  function getUserEntities(userEntities, allEntities) {
+    let arrIds = userEntities.map((userEntity) => userEntity.id);
+    return allEntities.filter((entity) => arrIds.includes(entity.id));
   }
 
   function fetchEvents(userEvents) {
@@ -56,7 +56,7 @@ export default function Profile() {
         if (!data.error) {
           fetchEvents(data.events);
           fetchRooms(data.rooms);
-          setUserData(data || {});
+          setUser(data || {});
         }
         setIsLoaded(true);
       })
