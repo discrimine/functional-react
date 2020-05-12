@@ -10,6 +10,8 @@ import Signup from './components/users/Signup';
 import Event from './components/events/Event';
 import Room from './components/rooms/Room';
 import Profile from './components/profile/Profile';
+import AddEvent from './components/events/AddEvent';
+import AddRoom from './components/rooms/AddRoom';
 
 import './App.scss';
 
@@ -21,13 +23,15 @@ function App() {
         <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
         <Switch>
           <Route path="/home" component={Main} />
-          <Route path="/rooms" component={Rooms} />
-          <Route path="/events" component={Events} />
+          <Route path="/rooms" component={() => <Rooms isLoggedIn={isLoggedIn} />} />
+          <Route path="/events" component={() => <Events isLoggedIn={isLoggedIn} />} />
           <Route path="/login" component={() => <Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/signup" component={() => <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/event/:id" component={Event} />
           <Route path="/room/:id" component={Room} />
           <Route path="/profile" component={Profile} />
+          <Route path="/addRoom" component={() => <AddRoom setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/addEvent" component={() => <AddEvent setIsLoggedIn={setIsLoggedIn} />} />
           <Redirect from="/" to="/home" />
         </Switch>
       </BrowserRouter>

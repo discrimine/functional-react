@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import RoomCard from '../shared/RoomCard';
 import Spinner from '../shared/Spinner';
 import { ROOMS_URL } from '../../constants/urls';
 
-export default function Rooms() {
+export default function Rooms(props) {
   const [rooms, setRooms] = useState([]);
-  const [totalRooms, setTotalRooms] = useState(0);
   const [loader, setLoader] = useState(true);
   const [filterOptions, setFilterOptions] = useState(new URLSearchParams());
+  const history = useHistory();
 
   useEffect(fetchRooms, []);
 
@@ -16,7 +21,6 @@ export default function Rooms() {
       .then(response => response.json())
       .then(data => {
         setRooms(data.rooms || []);
-        setTotalRooms(data.roomCount || 0);
         setLoader(false);
       })
       .catch(err => {
@@ -40,12 +44,24 @@ export default function Rooms() {
     fetchRooms();
   }
 
+  function addRoom() {
+    if (props.isLoggedIn) {
+      history.push('/addRoom');
+    } else {
+      toast.error('You need to Log In or Sign Up to add new room', {
+        position: "top-center",
+        autoClose: 3000,
+        pauseOnHover: true,
+      });
+    }
+  }
+
   return loader
   ? ( <Spinner /> )
   : (
     <div className="container">
       <div className="row align-items-end mt-3">
-        <div className="form-group col-2">
+        <div className="form-group col-1">
           <label>Members</label>
           <input
             type="text"
@@ -74,28 +90,37 @@ export default function Rooms() {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group col-3">
-          <label>Category</label>
+        <div className="form-group col-2">
+          <label>Rating</label>
           <input
             type="text"
             className="form-control"
-            name="category"
-            value={filterOptions.get('category') || ''}
+            name="rating"
+            value={filterOptions.get('rating') || ''}
             onChange={handleChange}
           />
         </div>
         <div className="form-group col-1">
           <button type="submit" onClick={clearFilter} className="btn btn-primary">Clear</button>
         </div>
+        <div className="form-group col-2 d-flex justify-content-end border-left" style={{borderLeft: '1px solid rgba(0, 0, 0, 0.125)'}}>
+          <button type="submit" onClick={addRoom} className="btn btn-success text-light">Add Room</button>
+        </div>
+        
       </div>
       <div className="row">
-        <p>Total: {totalRooms}</p>
+        
       </div>
       <div className="row">
         {rooms.map(room => (
           <RoomCard key={room.id} room={room} />
         ))}
       </div>
+      <ToastContainer />
     </div>
   );
 }
+
+Rooms.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+};

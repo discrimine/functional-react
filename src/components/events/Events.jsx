@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import EventCard from '../shared/EventCard';
 import Spinner from '../shared/Spinner';
-import { GET_EVENTS_URL } from '../../constants/urls';
+import { EVENTS_URL } from '../../constants/urls';
 
-export default function Events() {
+export default function Events(props) {
   const [events, setEvents] = useState([]);
   const [filterOptions, setFilterOptions] = useState(new URLSearchParams());
   const [isLoaded, setIsLoaded] = useState(false);
+  const history = useHistory();
 
   useEffect(fetchEvents, [])
 
@@ -17,7 +23,7 @@ export default function Events() {
   }
 
   function fetchEvents() {
-    fetch(GET_EVENTS_URL + '?' + filterOptions)
+    fetch(EVENTS_URL + '?' + filterOptions)
       .then((response) => response.json())
       .then((data) => {
         setEvents(data.events || []);
@@ -38,12 +44,24 @@ export default function Events() {
     fetchEvents();
   }
 
+  function addEvent() {
+    if (props.isLoggedIn) {
+      history.push('/addEvent');
+    } else {
+      toast.error('You need to Log In or Sign Up to add new event', {
+        position: "top-center",
+        autoClose: 3000,
+        pauseOnHover: true,
+      });
+    }
+  }
+
   return !isLoaded
   ? ( <Spinner /> )
   : (
     <div className="container">
       <div className="row align-items-end mt-3">
-        <div className="form-group col-2">
+        <div className="form-group col-1">
           <label>Members</label>
           <input
             type="text"
@@ -72,7 +90,7 @@ export default function Events() {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group col-3">
+        <div className="form-group col-2">
           <label>Location</label>
           <input
             type="text"
@@ -85,10 +103,18 @@ export default function Events() {
         <div className="form-group col-1">
           <button type="submit" onClick={clearFilter} className="btn btn-primary">Clear</button>
         </div>
+        <div className="form-group col-2 d-flex justify-content-end border-left" style={{borderLeft: '1px solid rgba(0, 0, 0, 0.125)'}}>
+          <button type="submit" onClick={addEvent} className="btn btn-success text-light">Add Event</button>
+        </div>
       </div>
       <div className="row">
         {events.map((event, index) => <EventCard event={event} key={index} />)}
       </div>
+      <ToastContainer />
     </div>
   );
 }
+
+Events.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+};

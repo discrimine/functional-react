@@ -3,6 +3,7 @@ export default function defaultOptionsAuth () {
   return {
     headers: {
       'Authorization': authToken,
+      'Content-Type': 'application/json',
     },
   };
 }

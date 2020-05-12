@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import EventCard from '../shared/EventCard';
 import RoomCard from '../shared/RoomCard';
 import Spinner from '../shared/Spinner';
-import { GET_EVENTS_URL, ROOMS_URL } from '../../constants/urls';
+import { EVENTS_URL, ROOMS_URL } from '../../constants/urls';
 
 export default function Main() {
   const [events, setEvents] = useState([]);
@@ -11,7 +11,7 @@ export default function Main() {
   const [rooms, setRooms] = useState([]);
 
   function fetchEvents() {
-    fetch(GET_EVENTS_URL + '?page=1')
+    fetch(EVENTS_URL + '?page=1')
       .then(response => response.json())
       .then(data => {
         setEvents(data.events.slice(0, 3) || []);

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 
 import HeaderLink from './HeaderLink';
-import {Link, useHistory} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function Header(props) {
   const history = useHistory();
