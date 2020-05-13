@@ -23,12 +23,12 @@ export default function AddRoom() {
 
   function fetchCategories() {
     fetch(CATEGORY_URL)
-    .then(response => response.json())
-    .then((categories) => {
-      setCategories(categories || []);
-    })
-    .catch((err) => {
-      console.error(err);
+      .then(response => response.json())
+      .then((categories) => {
+        setCategories(categories || []);
+      })
+      .catch((err) => {
+        console.error(err);
     });
   }
 
@@ -46,24 +46,24 @@ export default function AddRoom() {
         cover,
         permission: 0,
         members_limit,
-      })
+      }),
     })
-    .then((response) => response.json())
-    .then((response) => {
-      if (!response.error) {
-        history.push(`room/${response.id}`);
-      } else {
-        const errors = response.error.errors;
-        const errorsArray = [];
-        for (let error in errors) {
-          errorsArray.push(errors[error]);
+      .then((response) => response.json())
+      .then((response) => {
+        if (!response.error) {
+          history.push(`room/${response.id}`);
+        } else {
+          const errors = response.error.errors;
+          const errorsArray = [];
+          for (let error in errors) {
+            errorsArray.push(errors[error]);
+          }
+          setFormErrors(errorsArray);
         }
-        setFormErrors(errorsArray);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    })
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function cancel() {

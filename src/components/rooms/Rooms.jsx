@@ -49,7 +49,7 @@ export default function Rooms(props) {
       history.push('/addRoom');
     } else {
       toast.error('You need to Log In or Sign Up to add new room', {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 3000,
         pauseOnHover: true,
       });

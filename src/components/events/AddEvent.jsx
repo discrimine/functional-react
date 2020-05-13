@@ -24,18 +24,19 @@ export default function AddEvent() {
 
   function fetchCategories() {
     fetch(CATEGORY_URL)
-    .then(response => response.json())
-    .then((categories) => {
-      setCategories(categories || []);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+      .then(response => response.json())
+      .then((categories) => {
+        setCategories(categories || []);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function addEvent() {
     const { title, description, location, category_id, members_limit } = inputs;
 
+    // TODO: doesn't work, be issue with start date
     fetch(EVENT_URL, {
         ...defaultOptionsAuth(),
         method: 'POST',
@@ -49,22 +50,22 @@ export default function AddEvent() {
           members_limit,
       })
     })
-    .then((response) => response.json())
-    .then((response) => {
-      if (!response.error) {
-        history.push(`event/${response.id}`);
-      } else {
-        const errors = response.error.errors;
-        const errorsArray = [];
-        for (let error in errors) {
-          errorsArray.push(errors[error]);
+      .then((response) => response.json())
+      .then((response) => {
+        if (!response.error) {
+          history.push(`event/${response.id}`);
+        } else {
+          const errors = response.error.errors;
+          const errorsArray = [];
+          for (let error in errors) {
+            errorsArray.push(errors[error]);
+          }
+          setFormErrors(errorsArray);
         }
-        setFormErrors(errorsArray);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    })
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function cancel() {

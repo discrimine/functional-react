@@ -49,7 +49,7 @@ export default function Events(props) {
       history.push('/addEvent');
     } else {
       toast.error('You need to Log In or Sign Up to add new event', {
-        position: "top-center",
+        position: 'top-center',
         autoClose: 3000,
         pauseOnHover: true,
       });
