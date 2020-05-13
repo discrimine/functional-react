@@ -18,9 +18,9 @@ export default function AddEvent() {
       setUserId(JSON.parse(localStorage.getItem('currentUser')).id);
     } catch (error) {
       console.log(error);
-      history.push('/notFound');
+      history.push('/accessDenied');
     } 
-  }, []);
+  }, [history]);
 
   function fetchCategories() {
     fetch(CATEGORY_URL)
