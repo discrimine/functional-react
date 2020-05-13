@@ -23,7 +23,7 @@ export default function Signup(props) {
           if(res.token) {
             localStorage.setItem('currentUser', JSON.stringify(res));
             props.setIsLoggedIn(true);
-            history.push('/profile')
+            history.push('/profile');
           } else {
             setErrorMessage(res.error.errors.password ? res.error.errors.password[0] : res.error.errors.message[0]);
           }

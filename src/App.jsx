@@ -10,6 +10,7 @@ import Signup from './components/users/Signup';
 import Event from './components/events/Event';
 import Room from './components/rooms/Room';
 import Profile from './components/profile/Profile';
+import ProfileEdit from './components/profile/ProfileEdit';
 
 import './App.scss';
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/event/:id" component={Event} />
           <Route path="/room/:id" component={Room} />
           <Route path="/profile" component={Profile} />
+          <Route path="/profile-edit" component={ProfileEdit} />
           <Redirect from="/" to="/home" />
         </Switch>
       </BrowserRouter>

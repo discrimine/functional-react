@@ -11,6 +11,7 @@ const NO_AVATAR_PATH = process.env.PUBLIC_URL + '/imgs/no-avatar.png';
 const LOGIN_URL = `${BASE_URL}/signin`;
 const SIGNUP_URL = `${BASE_URL}/signup`;
 const PROFILE_URL = `${BASE_URL}/profile`;
+const PROFILE_UPDATE_URL = `${BASE_URL}/profile/update`;
 
 export {
   BASE_URL,
@@ -22,4 +23,5 @@ export {
   LOGIN_URL,
   SIGNUP_URL,
   PROFILE_URL,
+  PROFILE_UPDATE_URL
 };
