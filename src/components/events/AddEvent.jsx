@@ -17,10 +17,10 @@ export default function AddEvent() {
     try {
       setUserId(JSON.parse(localStorage.getItem('currentUser')).id);
     } catch (error) {
-      // TODO: redirect to 403;
       console.log(error);
+      history.push('/accessDenied');
     } 
-  }, []);
+  }, [history]);
 
   function fetchCategories() {
     fetch(CATEGORY_URL)

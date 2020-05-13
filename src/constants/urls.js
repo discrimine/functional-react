@@ -6,7 +6,8 @@ const EVENTS_URL = `${BASE_URL}/event/filter`;
 const EVENT_URL = `${BASE_URL}/event/`;
 const GET_COMMENTS_URL = `${BASE_URL}/comment`;
 
-const NO_AVATAR_PATH = process.env.PUBLIC_URL + '/imgs/no-avatar.png';
+const IMAGES_PATH = process.env.PUBLIC_URL + '/imgs/';
+const NO_AVATAR_PATH = IMAGES_PATH + 'no-avatar.png';
 
 const LOGIN_URL = `${BASE_URL}/signin`;
 const SIGNUP_URL = `${BASE_URL}/signup`;
@@ -20,6 +21,7 @@ export {
   EVENTS_URL,
   EVENT_URL,
   GET_COMMENTS_URL,
+  IMAGES_PATH,
   NO_AVATAR_PATH,
   LOGIN_URL,
   SIGNUP_URL,
