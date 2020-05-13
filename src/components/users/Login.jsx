@@ -24,7 +24,7 @@ export default function Login(props) {
           if (res.token) {
             localStorage.setItem('currentUser', JSON.stringify(res));
             props.setIsLoggedIn(true);
-            history.push('/');
+            history.push('/home');
           } else {
             setErrorMessage(res.error.errors.password ? res.error.errors.password[0] : res.error.errors.message[0]);
           }

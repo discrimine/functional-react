@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GET_EVENTS_URL, PROFILE_URL, ROOMS_URL } from '../../constants/urls';
+import { EVENTS_URL, PROFILE_URL, ROOMS_URL } from '../../constants/urls';
 import defaultOptionsAuth from '../shared/defaultOptionsAuth';
 
 import Spinner from '../shared/Spinner';
@@ -21,7 +21,7 @@ export default function Profile() {
   }
 
   function fetchEvents(userEvents) {
-    fetch(GET_EVENTS_URL)
+    fetch(EVENTS_URL)
       .then((response) => response.json())
       .then((data) => {
         let result = getUserEntities(userEvents, data.events);
