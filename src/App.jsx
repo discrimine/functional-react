@@ -12,6 +12,8 @@ import Room from './components/rooms/Room';
 import Profile from './components/profile/Profile';
 import AddEvent from './components/events/AddEvent';
 import AddRoom from './components/rooms/AddRoom';
+import NotFound from './components/main/NotFound';
+import AccessDenied from './components/main/AccessDenied';
 
 import './App.scss';
 
@@ -32,7 +34,9 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/addRoom" component={() => <AddRoom setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/addEvent" component={() => <AddEvent setIsLoggedIn={setIsLoggedIn} />} />
-          <Redirect from="/" to="/home" />
+          <Route path="/notFound" component={NotFound} />
+          <Route path="/accessDenied" component={AccessDenied} />
+          <Redirect from="/" to="/notFound" />
         </Switch>
       </BrowserRouter>
     </div>

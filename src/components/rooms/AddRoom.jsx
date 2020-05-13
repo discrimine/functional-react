@@ -16,8 +16,8 @@ export default function AddRoom() {
     try {
       setUserId(JSON.parse(localStorage.getItem('currentUser')).id);
     } catch (error) {
-      // TODO: redirect to 403;
       console.log(error);
+      history.push('/notFound');
     } 
   }, []);
 
