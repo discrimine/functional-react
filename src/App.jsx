@@ -34,9 +34,9 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/addRoom" component={() => <AddRoom setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/addEvent" component={() => <AddEvent setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/notFound" component={NotFound} />
           <Route path="/accessDenied" component={AccessDenied} />
-          <Redirect from="/" to="/notFound" />
+          <Redirect from="/" exact to="/home" />
+          <Route component={NotFound} />
         </Switch>
       </BrowserRouter>
     </div>
