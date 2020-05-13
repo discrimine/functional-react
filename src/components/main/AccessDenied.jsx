@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { IMAGES_PATH } from '../../constants/urls';
 
-export default function NotFound() {
+export default function AccessDenied() {
   const history = useHistory();
 
   function goBack() {
