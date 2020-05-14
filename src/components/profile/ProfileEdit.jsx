@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PROFILE_URL, PROFILE_UPDATE_URL } from '../../constants/urls';
 import defaultOptionsAuth from '../shared/defaultOptionsAuth';
 import { useHistory } from 'react-router-dom';
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 import Spinner from '../shared/Spinner';
 
@@ -27,13 +27,13 @@ export default function ProfileEdit() {
       .then((data) => {
         if (!data.error) {
           const userData = {
-            'first_name': data.first_name,
-            'last_name': data.last_name,
-            'nick': data.nick,
-            'email': data.email,
-            'birth_date': format(new Date(data.birth_date), "yyyy-MM-dd") || '',
-            'gender': data.gender.toString() || '',
-            'avatar': data.avatar,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            nick: data.nick,
+            email: data.email,
+            birth_date: format(new Date(data.birth_date), 'yyyy-MM-dd') || '',
+            gender: data.gender.toString(),
+            avatar: data.avatar,
           };
           setUser(userData || {});
         }
@@ -124,7 +124,7 @@ export default function ProfileEdit() {
             </div>
             <div className="form-group row">
               <label
-                htmlFor="inputEmail1"
+                htmlFor="inputEmail"
                 className="col-4 col-form-label">
                 Email address
               </label>
@@ -150,7 +150,6 @@ export default function ProfileEdit() {
                   type="date"
                   className="form-control"
                   name="birth_date"
-                  placeholder="Enter email"
                   onChange={handleInputChange}
                   value={user.birth_date || ''}/>
               </div>

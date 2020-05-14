@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { GET_EVENTS_URL, PROFILE_URL, ROOMS_URL } from '../../constants/urls';
 import defaultOptionsAuth from '../shared/defaultOptionsAuth';
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 import Spinner from '../shared/Spinner';
 import EventCard from '../shared/EventCard';
 import RoomCard from '../shared/RoomCard';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
   const [user, setUser] = useState({});
