@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+
 import { Link } from 'react-router-dom';
-import { GET_EVENT_URL, GET_COMMENTS_URL, NO_AVATAR_PATH } from '../../constants/urls';
+import { EVENT_URL, GET_COMMENTS_URL, NO_AVATAR_PATH } from '../../constants/urls';
 import StarRatings from 'react-star-ratings';
 import Spinner from '../shared/Spinner';
 import { useHistory } from "react-router-dom";
@@ -16,10 +17,10 @@ export default function Event(props) {
   // TODO: set logged user checking, while implementing comments adding
   const isUserLogged = false;
 
-  useEffect(fetchEvent, [])
+  useEffect(fetchEvent, []);
 
   function fetchEvent() {
-    fetch(GET_EVENT_URL + eventId)
+    fetch(EVENT_URL + eventId)
       .then((response) => response.json())
       .then((data) => {
         getComments();
@@ -28,6 +29,7 @@ export default function Event(props) {
       })
       .catch((err) => {
         console.error(err);
+        setIsLoaded(true);
       });
   };
 

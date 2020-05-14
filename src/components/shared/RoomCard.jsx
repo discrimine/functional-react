@@ -28,9 +28,9 @@ RoomCard.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    cover: PropTypes.string.isRequired,
+    cover: PropTypes.string,
     creator: PropTypes.shape({
-      nick: PropTypes.string.isRequired,
+      nick: PropTypes.string,
     }),
     category: PropTypes.shape({
       id: PropTypes.number.isRequired,
