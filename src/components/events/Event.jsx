@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
-
-import { Link } from 'react-router-dom';
-import { EVENT_URL, GET_COMMENTS_URL, NO_AVATAR_PATH } from '../../constants/urls';
+import { PropTypes } from 'prop-types';
+import { Link, useHistory } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
+
+import defaultOptionsAuth from '../shared/defaultOptionsAuth';
+import { EVENT_URL, COMMENTS_URL, NO_AVATAR_PATH } from '../../constants/urls';
 import Spinner from '../shared/Spinner';
-import { useHistory } from "react-router-dom";
+import useCustomForm from '../hooks/FormHooks';
 import './event.scss';
 
 export default function Event(props) {
   const [event, setEvent] = useState({});
   const history = useHistory();
-  const eventId = props.match.params.id;
   const [isLoaded, setIsLoaded] = useState(false);
   const [comments, setComments] = useState([]);
+  const {inputs, handleInputChange} = useCustomForm();
+  const [pageBottom, setPageBottom] = useState({});
 
-  // TODO: set logged user checking, while implementing comments adding
-  const isUserLogged = false;
+  const eventId = props.match.params.id;
+  const isUserLogged = props.isLoggedIn;
 
   useEffect(fetchEvent, []);
 
@@ -33,8 +36,12 @@ export default function Event(props) {
       });
   };
 
+  function scrollToBottom() {
+    pageBottom.scrollIntoView({ behavior: 'smooth' });
+  }
+
   function getComments() {
-    fetch(`${GET_COMMENTS_URL}?entity_id=${eventId}&entity_type=event`)
+    fetch(`${COMMENTS_URL}?entity_id=${eventId}&entity_type=event`)
       .then((response) => response.json())
       .then((comments) => {
         setComments(comments);
@@ -45,8 +52,25 @@ export default function Event(props) {
   }
 
   function addComment() {
-    // TODO: implement comments adding
-    console.log('added!');
+    const userId = JSON.parse(localStorage.getItem('currentUser')).id;
+    fetch(`${COMMENTS_URL}/add`, {
+        method: 'POST',
+        ...defaultOptionsAuth(),
+        body: JSON.stringify({
+          entity_id: eventId,
+          entity_type: 'event',
+          user_id: userId,
+          text: inputs.commentText,
+          is_banned: '0',
+        }),
+      })
+      .then(() => {
+        getComments();
+        scrollToBottom();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function joinEvent() {
@@ -96,7 +120,7 @@ export default function Event(props) {
                 <div className="col-1 d-flex align-items-center justify-content-center p-2">
                   <img height="50" width="50" src={NO_AVATAR_PATH} alt="User"/>
                 </div>
-                <textarea className="col-11"></textarea>
+                <textarea name="commentText" onChange={handleInputChange} className="col-11"></textarea>
               </div>
               <div className="d-flex mt-2 justify-content-end">
                 {isUserLogged
@@ -125,8 +149,8 @@ export default function Event(props) {
                             <img height="50" width="50" src={authorAvatar} alt={authorNick}/>
                           </div>
                         </div>
-                        
                       </div>
+                      
                       <div className="col-10">
                         { comment.text }
                       </div>
@@ -137,7 +161,20 @@ export default function Event(props) {
               : <div>There are no comments yet :(</div>
             }
           </div>
+          <div style={{ float:"left", clear: "both" }}
+            ref={(el) => { setPageBottom(el); }}>
+          </div>
         </div>
       </div>
     );
 }
+
+Event.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+};
+
