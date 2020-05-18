@@ -15,6 +15,7 @@ export default function Event(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [comments, setComments] = useState([]);
   const {inputs, handleInputChange} = useCustomForm();
+  const [pageBottom, setPageBottom] = useState({});
 
   const eventId = props.match.params.id;
   const isUserLogged = props.isLoggedIn;
@@ -34,6 +35,10 @@ export default function Event(props) {
         setIsLoaded(true);
       });
   };
+
+  function scrollToBottom() {
+    pageBottom.scrollIntoView({ behavior: 'smooth' });
+  }
 
   function getComments() {
     fetch(`${COMMENTS_URL}?entity_id=${eventId}&entity_type=event`)
@@ -59,9 +64,9 @@ export default function Event(props) {
           is_banned: '0',
         }),
       })
-      .then((response) => response.json())
       .then(() => {
         getComments();
+        scrollToBottom();
       })
       .catch((err) => {
         console.error(err);
@@ -144,8 +149,8 @@ export default function Event(props) {
                             <img height="50" width="50" src={authorAvatar} alt={authorNick}/>
                           </div>
                         </div>
-                        
                       </div>
+                      
                       <div className="col-10">
                         { comment.text }
                       </div>
@@ -155,6 +160,9 @@ export default function Event(props) {
               })
               : <div>There are no comments yet :(</div>
             }
+          </div>
+          <div style={{ float:"left", clear: "both" }}
+            ref={(el) => { setPageBottom(el); }}>
           </div>
         </div>
       </div>
