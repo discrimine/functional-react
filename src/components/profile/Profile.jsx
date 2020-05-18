@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { EVENTS_URL, PROFILE_URL, ROOMS_URL } from '../../constants/urls';
 import defaultOptionsAuth from '../shared/defaultOptionsAuth';
+import { format } from 'date-fns';
 
 import Spinner from '../shared/Spinner';
 import EventCard from '../shared/EventCard';
 import RoomCard from '../shared/RoomCard';
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
   const [user, setUser] = useState({});
@@ -128,7 +130,7 @@ export default function Profile() {
             Date of birth
           </div>
           <div className="col-6 text-left">
-            {user.birth_date || '-'}
+            {format(new Date(user.birth_date), "dd-MMM-yyyy") || '-'}
           </div>
         </div>
         <div className="row">
@@ -140,6 +142,9 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <Link className="btn btn-link btn-sm" to={`/profile-edit`}>
+        Edit profile
+      </Link>
     </div>
   }
 

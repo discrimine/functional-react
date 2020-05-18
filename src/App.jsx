@@ -14,6 +14,7 @@ import AddEvent from './components/events/AddEvent';
 import AddRoom from './components/rooms/AddRoom';
 import NotFound from './components/main/NotFound';
 import AccessDenied from './components/main/AccessDenied';
+import ProfileEdit from './components/profile/ProfileEdit';
 
 import './App.scss';
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/event/:id" component={Event} />
           <Route path="/room/:id" component={Room} />
           <Route path="/profile" component={Profile} />
+          <Route path="/profile-edit" component={ProfileEdit} />
           <Route path="/addRoom" component={() => <AddRoom setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/addEvent" component={() => <AddEvent setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/accessDenied" component={AccessDenied} />

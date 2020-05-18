@@ -12,6 +12,7 @@ const NO_AVATAR_PATH = IMAGES_PATH + 'no-avatar.png';
 const LOGIN_URL = `${BASE_URL}/signin`;
 const SIGNUP_URL = `${BASE_URL}/signup`;
 const PROFILE_URL = `${BASE_URL}/profile`;
+const PROFILE_UPDATE_URL = `${BASE_URL}/profile/update`;
 
 const CATEGORY_URL = `${BASE_URL}/category`;
 
@@ -27,4 +28,5 @@ export {
   SIGNUP_URL,
   PROFILE_URL,
   CATEGORY_URL,
+  PROFILE_UPDATE_URL,
 };
