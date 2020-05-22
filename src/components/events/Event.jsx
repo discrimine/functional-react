@@ -8,7 +8,7 @@ import { EVENT_URL, COMMENTS_URL, NO_AVATAR_PATH, JOIN_EVENT_URL, LEAVE_EVENT_UR
 import Spinner from '../shared/Spinner';
 import useCustomForm from '../hooks/FormHooks';
 import './event.scss';
-import {toast} from "react-toastify";
+import { toast } from 'react-toastify';
 
 export default function Event(props) {
   const [event, setEvent] = useState({});

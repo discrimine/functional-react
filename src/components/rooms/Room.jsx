@@ -29,7 +29,7 @@ export default function Room(props) {
 
   useEffect(() => {
     fetchRoomData();
-  }, [id]);
+  }, []);
 
   function fetchRoomData() {
     fetch(`${ROOMS_URL}/${id}`)
@@ -120,28 +120,28 @@ export default function Room(props) {
             </div>
             <div className="row justify-content-end mt-n5 mb-3">
               {isMember ? (
-              <div className="col-3 p-0 text-right">
-                <button
-                  onClick={leaveRoom}
-                  type="button"
-                  className="btn btn-warning"
-                  style={{ fontSize: '16px' }}
-                >
-                  LEAVE ROOM
-                </button>
-              </div>
-                ) : (
-              <div className="col-2 p-0 text-right pr-3">
-                <button
-                  onClick={joinRoom}
-                  type="button"
-                  className="btn btn-primary"
-                  style={{ fontSize: '16px' }}
-                >
-                  JOIN ROOM
-                </button>
-              </div>
-                )}
+                <div className="col-3 p-0 text-right">
+                  <button
+                    onClick={leaveRoom}
+                    type="button"
+                    className="btn btn-warning"
+                    style={{ fontSize: '16px' }}
+                  >
+                    LEAVE ROOM
+                  </button>
+                </div>
+              ) : (
+                <div className="col-2 p-0 text-right pr-3">
+                  <button
+                    onClick={joinRoom}
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ fontSize: '16px' }}
+                  >
+                    JOIN ROOM
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="col-8">
