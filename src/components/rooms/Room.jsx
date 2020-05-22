@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 import Spinner from '../shared/Spinner';
-import { ROOMS_URL } from '../../constants/urls';
+import { JOIN_ROOM_URL, LEAVE_ROOM_URL, ROOMS_URL } from '../../constants/urls';
+import defaultOptionsAuth from '../shared/defaultOptionsAuth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 import './room.scss';
 
 export default function Room(props) {
@@ -12,9 +15,23 @@ export default function Room(props) {
   const { id } = params;
   const [room, setRoom] = useState(null);
   const [loader, setLoader] = useState(true);
+  const [isMember, setIsMember] = useState(false);
   const [error, setError] = useState(false);
+  const options = {};
+  const toastOptions = {
+    position: 'top-center',
+    autoClose: 3000,
+    pauseOnHover: true,
+  };
+  const userId = JSON.parse(localStorage.getItem('currentUser'))
+    ? JSON.parse(localStorage.getItem('currentUser')).id
+    : null;
 
   useEffect(() => {
+    fetchRoomData();
+  }, []);
+
+  function fetchRoomData() {
     fetch(`${ROOMS_URL}/${id}`)
       .then(response => response.json())
       .then(data => {
@@ -22,6 +39,7 @@ export default function Room(props) {
           setError(true);
         } else {
           setRoom(data);
+          setIsMember(data.members.find(member => member.id === userId));
           setError(false);
         }
         setLoader(false);
@@ -32,7 +50,54 @@ export default function Room(props) {
         setError(true);
         setLoader(false);
       });
-  }, [id]);
+  }
+
+  function joinRoom() {
+    if (props.isLoggedIn) {
+      options.method = 'POST';
+      options.body = JSON.stringify({entity_id: id});
+      fetch(JOIN_ROOM_URL, {...options, ...defaultOptionsAuth()})
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            toast.warning(data.error.errors.message[0], toastOptions);
+          } else {
+            toast.success('Congratulations! You have just joined this room!', toastOptions);
+            fetchRoomData();
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          setError(true);
+          setLoader(false);
+        })
+    } else {
+      toast.error('You need to Log In or Sign Up to join room', {
+        position: 'top-center',
+        autoClose: 3000,
+        pauseOnHover: true,
+      });
+    }
+  }
+
+  function leaveRoom() {
+    options.method = 'DELETE';
+    fetch(`${LEAVE_ROOM_URL}${id}`, {...options, ...defaultOptionsAuth()})
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          toast.warning(data.error.errors.message[0], toastOptions);
+        } else {
+          toast.success('You have successfully left this room!', toastOptions);
+          fetchRoomData();
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setError(true);
+        setLoader(false);
+      })
+  }
 
   return loader ? (
     <Spinner />
@@ -53,15 +118,30 @@ export default function Room(props) {
                 starDimension="30px"
               />
             </div>
-            <div>
-              <Link
-                to="/signup"
-                type="button"
-                className="btn btn-primary"
-                style={{ marginTop: '-75px', fontSize: '24px', float: 'right' }}
-              >
-                JOIN ROOM
-              </Link>
+            <div className="row justify-content-end mt-n5 mb-3">
+              {isMember ? (
+                <div className="col-3 p-0 text-right">
+                  <button
+                    onClick={leaveRoom}
+                    type="button"
+                    className="btn btn-warning"
+                    style={{ fontSize: '16px' }}
+                  >
+                    LEAVE ROOM
+                  </button>
+                </div>
+              ) : (
+                <div className="col-2 p-0 text-right pr-3">
+                  <button
+                    onClick={joinRoom}
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ fontSize: '16px' }}
+                  >
+                    JOIN ROOM
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="col-8">
@@ -135,6 +215,7 @@ export default function Room(props) {
           </div>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 }
@@ -145,4 +226,5 @@ Room.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
