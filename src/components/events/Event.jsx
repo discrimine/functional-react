@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 
 import defaultOptionsAuth from '../shared/defaultOptionsAuth';
-import { EVENT_URL, COMMENTS_URL, NO_AVATAR_PATH } from '../../constants/urls';
+import { EVENT_URL, COMMENTS_URL, NO_AVATAR_PATH, JOIN_EVENT_URL, LEAVE_EVENT_URL } from '../../constants/urls';
 import Spinner from '../shared/Spinner';
 import useCustomForm from '../hooks/FormHooks';
 import './event.scss';
+import {toast} from "react-toastify";
 
 export default function Event(props) {
   const [event, setEvent] = useState({});
-  const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false);
   const [comments, setComments] = useState([]);
   const {inputs, handleInputChange} = useCustomForm();
   const [pageBottom, setPageBottom] = useState({});
+  const [isMember, setIsMember] = useState(false);
 
   const eventId = props.match.params.id;
   const isUserLogged = props.isLoggedIn;
+  const options = {};
+  const toastOptions = {
+    position: 'top-center',
+    autoClose: 3000,
+    pauseOnHover: true,
+  };
+  const userId = JSON.parse(localStorage.getItem('currentUser'))
+    ? JSON.parse(localStorage.getItem('currentUser')).id
+    : null;
 
   useEffect(fetchEvent, []);
 
@@ -28,6 +38,7 @@ export default function Event(props) {
       .then((data) => {
         getComments();
         setEvent(data || {});
+        setIsMember(data.members.find(member => member.id === userId));
         setIsLoaded(true);
       })
       .catch((err) => {
@@ -74,8 +85,46 @@ export default function Event(props) {
   }
 
   function joinEvent() {
-    // TODO: join, if user logged
-    history.push('/login');
+    if (props.isLoggedIn) {
+      options.method = 'POST';
+      options.body = JSON.stringify({entity_id: eventId});
+      fetch(JOIN_EVENT_URL, {...options, ...defaultOptionsAuth()})
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            toast.warning(data.error.errors.message[0], toastOptions);
+          } else {
+            toast.success('Congratulations! You have just joined this room!', toastOptions);
+            fetchEvent();
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        })
+    } else {
+      toast.error('You need to Log In or Sign Up to join room', {
+        position: 'top-center',
+        autoClose: 3000,
+        pauseOnHover: true,
+      });
+    }
+  }
+
+  function leaveEvent() {
+    options.method = 'DELETE';
+    fetch(`${LEAVE_EVENT_URL}${eventId}`, {...options, ...defaultOptionsAuth()})
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          toast.warning(data.error.errors.message[0], toastOptions);
+        } else {
+          toast.success('You have successfully left this room!', toastOptions);
+          fetchEvent();
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      })
   }
 
   return !isLoaded
@@ -92,7 +141,31 @@ export default function Event(props) {
               starDimension="30px"
             />
           </div>
-          <div className="col-1 offset-3"> <button type="button" onClick={joinEvent} className="btn btn-success">Join!</button> </div>
+        </div>
+        <div className="row justify-content-end mt-n5 mb-3">
+          {isMember ? (
+            <div className="col-3 p-0 text-right">
+              <button
+                onClick={leaveEvent}
+                type="button"
+                className="btn btn-warning"
+                style={{ fontSize: '16px' }}
+              >
+                LEAVE EVENT
+              </button>
+            </div>
+          ) : (
+            <div className="col-2 p-0 text-right pr-3">
+              <button
+                onClick={joinEvent}
+                type="button"
+                className="btn btn-primary"
+                style={{ fontSize: '16px' }}
+              >
+                JOIN EVENT
+              </button>
+            </div>
+          )}
         </div>
         <div className="row">
           <div className="col-7"><img src={event.cover} alt={event.title}/></div>
