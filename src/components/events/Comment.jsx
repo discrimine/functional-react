@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PropTypes } from 'prop-types';
 
 import useCustomForm from  '../hooks/FormHooks';
 import defaultOptionsAuth from '../shared/defaultOptionsAuth';
@@ -160,3 +161,21 @@ export default function AddEvent(props) {
   );
 }
 
+Comment.propTypes = {
+  commentData: PropTypes.shape({
+    isUserLogged: PropTypes.bool,
+    comment: PropTypes.shape({
+      author: PropTypes.shape({
+        id: PropTypes.number,
+        nick: PropTypes.string,
+        avatar: PropTypes.string,
+      }),
+      child_comments: PropTypes.array,
+      entity_id: PropTypes.number,
+      entity_type: PropTypes.string,
+      text: PropTypes.string,
+    }),
+    userId: PropTypes.number,
+    getComments: PropTypes.func.isRequired,
+  })
+}
