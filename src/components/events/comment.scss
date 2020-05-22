@@ -1,0 +1,26 @@
+.comment-card {
+  min-height: 50px;
+
+  .author-data {
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+  }
+  
+  .comment {
+    width: 100%;
+    outline: none;
+  
+    &:read-only {
+      border: none;
+      resize: none;
+    }
+  }
+  
+  .action-button {
+    color: #007bff;
+  }
+
+  &.answer-card {
+    transform: scale(0.9);
+    background-color: rgba(0, 0, 0, .05);
+  }
+}

@@ -8,6 +8,7 @@ import { EVENT_URL, COMMENTS_URL, NO_AVATAR_PATH } from '../../constants/urls';
 import Spinner from '../shared/Spinner';
 import useCustomForm from '../hooks/FormHooks';
 import './event.scss';
+import Comment from './Comment';
 
 export default function Event(props) {
   const [event, setEvent] = useState({});
@@ -16,11 +17,18 @@ export default function Event(props) {
   const [comments, setComments] = useState([]);
   const {inputs, handleInputChange} = useCustomForm();
   const [pageBottom, setPageBottom] = useState({});
+  const [userId, setUsetId] = useState(null);
 
   const eventId = props.match.params.id;
   const isUserLogged = props.isLoggedIn;
 
-  useEffect(fetchEvent, []);
+  useEffect(() => {
+    fetchEvent();
+    if (isUserLogged) {
+      setUsetId(JSON.parse(localStorage.getItem('currentUser')).id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function fetchEvent() {
     fetch(EVENT_URL + eventId)
@@ -52,7 +60,6 @@ export default function Event(props) {
   }
 
   function addComment() {
-    const userId = JSON.parse(localStorage.getItem('currentUser')).id;
     fetch(`${COMMENTS_URL}/add`, {
         method: 'POST',
         ...defaultOptionsAuth(),
@@ -137,25 +144,10 @@ export default function Event(props) {
             </div>
             {comments.length
               ? comments.map((comment, key) => {
-                const authorNick = comment.author.nick || 'Noname';
-                const authorAvatar = comment.author.avatar || NO_AVATAR_PATH;
+                const commentData = {comment, isUserLogged, userId, getComments};
+
                 return (
-                  <div className="comment-card shadow-sm p-3 mb-3 rounded" key={key}>
-                    <div className="row">
-                      <div className="col-2 author-data">
-                        <div className="column">
-                          <div align="center" className="w-100">{authorNick}</div>
-                          <div className="d-flex justify-content-center">
-                            <img height="50" width="50" src={authorAvatar} alt={authorNick}/>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="col-10">
-                        { comment.text }
-                      </div>
-                    </div>
-                  </div>
+                  <Comment commentData={commentData} key={key} />
                 )
               })
               : <div>There are no comments yet :(</div>
@@ -177,4 +169,3 @@ Event.propTypes = {
   }).isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
 };
-
