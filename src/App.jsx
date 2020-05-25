@@ -31,7 +31,7 @@ function App() {
           <Route path="/login" component={() => <Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/signup" component={() => <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/event/:id" component={(props) => <Event {...props} isLoggedIn={isLoggedIn} />} />
-          <Route path="/room/:id" component={Room} />
+          <Route path="/room/:id" component={(props) => <Room {...props} isLoggedIn={isLoggedIn} />} />
           <Route path="/profile" component={Profile} />
           <Route path="/profile-edit" component={ProfileEdit} />
           <Route path="/addRoom" component={() => <AddRoom setIsLoggedIn={setIsLoggedIn} />} />

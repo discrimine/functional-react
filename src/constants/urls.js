@@ -16,6 +16,11 @@ const PROFILE_UPDATE_URL = `${BASE_URL}/profile/update`;
 
 const CATEGORY_URL = `${BASE_URL}/category`;
 
+const JOIN_EVENT_URL = `${BASE_URL}/member/event/join`;
+const JOIN_ROOM_URL = `${BASE_URL}/member/room/join`;
+const LEAVE_EVENT_URL = `${BASE_URL}/member/event/`;
+const LEAVE_ROOM_URL = `${BASE_URL}/member/room/`;
+
 export {
   BASE_URL,
   ROOMS_URL,
@@ -29,4 +34,8 @@ export {
   PROFILE_URL,
   CATEGORY_URL,
   PROFILE_UPDATE_URL,
+  JOIN_EVENT_URL,
+  JOIN_ROOM_URL,
+  LEAVE_EVENT_URL,
+  LEAVE_ROOM_URL,
 };
